@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { User } from './user';
-import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user',
@@ -12,13 +11,9 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit {
   users: Array<User> = [];
 
-  constructor(private _userService: UserService, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  ngOnInit() {
-      this._userService.getUsers().subscribe((users) => {
-          this.users = users;
-      });
-  }
+  ngOnInit() {}
 
   create(user: User) {
       this.http.post('http://laravel-api-angular4.dev/customers', user).subscribe(

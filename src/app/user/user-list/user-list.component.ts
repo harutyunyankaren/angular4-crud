@@ -1,5 +1,9 @@
-import {Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
-import {User} from '../user';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+
+import { User } from '../user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -12,10 +16,13 @@ export class UserListComponent implements OnInit {
     @Output() destroyUserEvent = new EventEmitter();
     @Output() updateUserEvent = new EventEmitter();
 
-  constructor() { }
+    constructor(private _userService: UserService, private http: HttpClient) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this._userService.getUsers().subscribe((users) => {
+            this.users = users;
+        });
+    }
 
   destroy(user: User) {
     this.destroyUserEvent.emit(user);
